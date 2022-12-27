@@ -49,6 +49,7 @@
             android:fontFamily="@font/sf_pro_display_semibold"
             android:hint="@string/txt_email_hint"
             android:inputType="textEmailAddress"
+            android:minHeight="48dp"
             android:textColor="@color/black"
             android:textColorHint="@color/light_gray"
             android:textSize="16sp" />
@@ -77,6 +78,7 @@
             android:fontFamily="@font/sf_pro_display_semibold"
             android:hint="@string/txt_password_hint"
             android:inputType="textPassword"
+            android:minHeight="48dp"
             android:textColor="@color/black"
             android:textColorHint="@color/light_gray"
             android:textSize="16sp" />

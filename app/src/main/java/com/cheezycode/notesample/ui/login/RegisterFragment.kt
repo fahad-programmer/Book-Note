@@ -12,7 +12,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.cheezycode.notesample.R
 import com.cheezycode.notesample.databinding.FragmentRegisterBinding
+import com.cheezycode.notesample.models.User
 import com.cheezycode.notesample.models.UserRequest
+import com.cheezycode.notesample.models.UserResponse
 import com.cheezycode.notesample.utils.Helper.Companion.hideKeyboard
 import com.cheezycode.notesample.utils.NetworkResult
 import com.cheezycode.notesample.utils.TokenManager
@@ -77,7 +79,6 @@ class RegisterFragment : Fragment() {
     private fun getUserRequest(): UserRequest {
         return binding.run {
             UserRequest(
-                txtEmail.text.toString(),
                 txtPassword.text.toString(),
                 txtUsername.text.toString()
             )
@@ -89,8 +90,7 @@ class RegisterFragment : Fragment() {
             binding.progressBar.isVisible = false
             when (it) {
                 is NetworkResult.Success -> {
-                    tokenManager.saveToken(it.data!!.token)
-                    findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
+                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                 }
                 is NetworkResult.Error -> {
                     showValidationErrors(it.message.toString())

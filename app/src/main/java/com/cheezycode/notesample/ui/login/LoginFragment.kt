@@ -61,9 +61,8 @@ class LoginFragment : Fragment() {
     private fun getUserRequest(): UserRequest {
         return binding.run {
             UserRequest(
-                txtEmail.text.toString(),
-                txtPassword.text.toString(),
-                ""
+                username=txtEmail.text.toString(),
+                password = txtPassword.text.toString(),
             )
         }
     }

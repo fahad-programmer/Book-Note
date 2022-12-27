@@ -28,7 +28,7 @@ class NoteAdapter(private val onNoteClicked: (NoteResponse) -> Unit) :
 
         fun bind(note: NoteResponse) {
             binding.title.text = note.title
-            binding.desc.text = note.description
+            binding.desc.text = note.body
             binding.root.setOnClickListener {
                 onNoteClicked(note)
             }
@@ -38,7 +38,7 @@ class NoteAdapter(private val onNoteClicked: (NoteResponse) -> Unit) :
 
     class ComparatorDiffUtil : DiffUtil.ItemCallback<NoteResponse>() {
         override fun areItemsTheSame(oldItem: NoteResponse, newItem: NoteResponse): Boolean {
-            return oldItem._id == newItem._id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: NoteResponse, newItem: NoteResponse): Boolean {

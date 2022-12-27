@@ -7,18 +7,18 @@ import retrofit2.http.*
 
 interface NoteAPI {
 
-    @POST("/note")
+    @POST("api/notes/")
     suspend fun createNote(@Body noteRequest: NoteRequest): Response<NoteResponse>
 
-    @GET("/note")
+    @GET("api/notes/")
     suspend fun getNotes(): Response<List<NoteResponse>>
 
-    @DELETE("/note/{noteId}")
-    suspend fun deleteNote(@Path("noteId") noteId: String) : Response<NoteResponse>
+    @DELETE("api/notes/{id}/")
+    suspend fun deleteNote(@Path("id") id: String) : Response<NoteResponse>
 
-    @PUT("/note/{noteId}")
+    @PUT("api/notes/{id}/")
     suspend fun updateNote(
-        @Path("noteId") noteId: String,
+        @Path("id") id: String,
         @Body noteRequest: NoteRequest
     ): Response<NoteResponse>
 }
