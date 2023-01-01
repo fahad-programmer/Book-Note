@@ -115,6 +115,13 @@
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="16sp" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/bannerAd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-9139048484944052/7395939014" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

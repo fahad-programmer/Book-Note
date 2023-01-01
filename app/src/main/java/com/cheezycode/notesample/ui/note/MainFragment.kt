@@ -1,6 +1,7 @@
 package com.cheezycode.notesample.ui.note
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +20,9 @@ import com.cheezycode.notesample.utils.Constants.TAG
 import com.cheezycode.notesample.utils.NetworkResult
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -38,9 +42,61 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    private fun showIntersialAds() {
+        MobileAds.initialize(view!!.context) {}
+        var mInterstitialAd: InterstitialAd? = null
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(view!!.context,"ca-app-pub-9139048484944052/1936562926", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                mInterstitialAd = null
+            }
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                mInterstitialAd = interstitialAd
+            }
+        })
+
+        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdClicked() {
+                // Called when a click is recorded for an ad.
+            }
+
+            override fun onAdDismissedFullScreenContent() {
+                // Called when ad is dismissed.
+                mInterstitialAd = null
+            }
+
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                // Called when ad fails to show.
+                mInterstitialAd = null
+            }
+
+            override fun onAdImpression() {
+                // Called when an impression is recorded for an ad.
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                // Called when ad is shown.
+                mInterstitialAd = null
+            }
+        }
+
+        val handler = Handler()
+        val runnable = Runnable {
+
+            if (mInterstitialAd != null) {
+                mInterstitialAd?.show(getActivity()!!)
+            } else {
+                println("The interstitial ad wasn't ready yet.")
+            }
+        }
+        handler.postDelayed(runnable, 5000) // 5000 milliseconds = 5 seconds
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         noteViewModel.getAllNotes()
+        showIntersialAds()
         binding.noteList.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.noteList.adapter = adapter
