@@ -1,5 +1,5 @@
 
-# Yet Another Notes App
+# Book Note
 
 This is a simple note taking app in Android with Integrated API. In this project we have covered everything that is required to create a fully functional app.
 
