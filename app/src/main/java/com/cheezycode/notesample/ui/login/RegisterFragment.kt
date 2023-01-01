@@ -40,7 +40,7 @@ class RegisterFragment : Fragment() {
 
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         if (tokenManager.getToken() != null) {
-            findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
+            findNavController().navigate(R.id.mainFragment)
         }
         return binding.root
 
