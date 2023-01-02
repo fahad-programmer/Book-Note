@@ -44,6 +44,10 @@ class AuthViewModel @Inject constructor(private val userRepository: UserReposito
         else if(!TextUtils.isEmpty(password) && password.length <= 5){
             result = Pair(false, "Password length should be greater than 5")
         }
+
+        else if (userName.contains(" ")) {
+            result = Pair(false, "Username can't contain spaces")
+        }
         return result
     }
 

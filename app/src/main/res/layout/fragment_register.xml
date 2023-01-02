@@ -18,9 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/sf_pro_display_bold"
-            android:text="@string/txt_register_header"
+            android:text= "@string/txt_register_header"
             android:textColor="@color/black"
-            android:textSize="30sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:layout_width="wrap_content"

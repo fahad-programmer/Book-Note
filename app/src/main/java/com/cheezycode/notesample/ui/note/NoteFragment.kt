@@ -56,7 +56,9 @@ class NoteFragment : Fragment() {
                 mInterstitialAd = null
             }
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                mInterstitialAd = interstitialAd
+                if (!activity?.isFinishing!!) {
+                    interstitialAd.show(activity!!)
+                }
             }
         })
 
@@ -89,7 +91,7 @@ class NoteFragment : Fragment() {
         val runnable = Runnable {
 
             if (mInterstitialAd != null) {
-                mInterstitialAd?.show(getActivity()!!)
+                mInterstitialAd?.show(activity!!)
             } else {
                 println("The interstitial ad wasn't ready yet.")
             }
@@ -124,6 +126,7 @@ class NoteFragment : Fragment() {
     private fun bindHandlers() {
         binding.btnDelete.setOnClickListener {
             note?.let { noteViewModel.deleteNote(it.id) }
+            showIntersialAds()
         }
         binding.apply {
             btnSubmit.setOnClickListener {
@@ -140,7 +143,12 @@ class NoteFragment : Fragment() {
     }
 
     private fun setInitialData() {
-        showIntersialAds()
+        try {
+            showIntersialAds()
+        } catch (e: java.lang.NullPointerException) {
+            println("Some exception occurred $e")
+        }
+
         val jsonNote = arguments?.getString("note")
         if (jsonNote != null) {
             note = Gson().fromJson<NoteResponse>(jsonNote, NoteResponse::class.java)

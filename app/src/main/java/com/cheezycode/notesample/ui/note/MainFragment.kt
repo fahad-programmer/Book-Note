@@ -96,9 +96,13 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         noteViewModel.getAllNotes()
-        showIntersialAds()
+        try {
+            showIntersialAds()
+        } catch (e: java.lang.NullPointerException) {
+            println("Some exception occurred $e")
+        }
         binding.noteList.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
         binding.noteList.adapter = adapter
         binding.addNote.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_noteFragment)
