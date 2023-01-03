@@ -19,7 +19,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     suspend fun registerUser(userRequest: UserRequest) {
         _userResponseLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.signup(userRequest)
-        handleResponse(response)
+        try {
+            handleResponse(response)
+        } catch (_ : Exception) {
+            _userResponseLiveData.postValue(NetworkResult.Error("Username Already In Use"))
+        }
+
     }
 
     suspend fun loginUser(userRequest: UserRequest) {

@@ -102,7 +102,7 @@ class MainFragment : Fragment() {
             println("Some exception occurred $e")
         }
         binding.noteList.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.noteList.adapter = adapter
         binding.addNote.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_noteFragment)
