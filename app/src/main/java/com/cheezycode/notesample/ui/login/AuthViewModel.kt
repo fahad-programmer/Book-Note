@@ -4,6 +4,7 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cheezycode.notesample.models.UserCreate
 import com.cheezycode.notesample.models.UserRequest
 import com.cheezycode.notesample.models.UserResponse
 import com.cheezycode.notesample.repository.UserRepository
@@ -19,7 +20,7 @@ class AuthViewModel @Inject constructor(private val userRepository: UserReposito
     val userResponseLiveData: LiveData<NetworkResult<UserResponse>>
     get() = userRepository.userResponseLiveData
 
-    fun registerUser(userRequest: UserRequest){
+    fun registerUser(userRequest: UserCreate){
         viewModelScope.launch {
             userRepository.registerUser(userRequest)
         }
@@ -35,10 +36,10 @@ class AuthViewModel @Inject constructor(private val userRepository: UserReposito
      isLogin: Boolean) : Pair<Boolean, String> {
 
         var result = Pair(true, "")
-        if(TextUtils.isEmpty(emailAddress) || (!isLogin && TextUtils.isEmpty(userName)) || TextUtils.isEmpty(password)){
+        if((!isLogin && TextUtils.isEmpty(userName)) || TextUtils.isEmpty(password)){
             result = Pair(false, "Please provide the credentials")
         }
-        else if(!Helper.isValidEmail(emailAddress)){
+        else if(!isLogin && !Helper.isValidEmail(emailAddress)){
             result = Pair(false, "Email is invalid")
         }
         else if(!TextUtils.isEmpty(password) && password.length <= 5){

@@ -72,9 +72,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun validateUserInput(): Pair<Boolean, String> {
-        val emailAddress = binding.txtEmail.text.toString()
         val password = binding.txtPassword.text.toString()
-        return authViewModel.validateCredentials(emailAddress, "" , password, true)
+        return authViewModel.validateCredentials("", "" , password, true)
     }
 
     private fun bindObservers() {

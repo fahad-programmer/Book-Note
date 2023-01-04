@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
             android:fontFamily="@font/sf_pro_display_regular"
-            android:text="@string/txt_email"
+            android:text="Email Or Username"
             android:textColor="@color/black"
             android:textSize="12sp" />
 

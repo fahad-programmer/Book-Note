@@ -3,6 +3,7 @@ package com.cheezycode.notesample.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cheezycode.notesample.api.UserAPI
+import com.cheezycode.notesample.models.UserCreate
 import com.cheezycode.notesample.models.UserRequest
 import com.cheezycode.notesample.models.UserResponse
 import com.cheezycode.notesample.utils.NetworkResult
@@ -16,15 +17,10 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val userResponseLiveData: LiveData<NetworkResult<UserResponse>>
         get() = _userResponseLiveData
 
-    suspend fun registerUser(userRequest: UserRequest) {
+    suspend fun registerUser(userRequest: UserCreate) {
         _userResponseLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.signup(userRequest)
-        try {
-            handleResponse(response)
-        } catch (_ : Exception) {
-            _userResponseLiveData.postValue(NetworkResult.Error("Username Already In Use"))
-        }
-
+         handleResponse(response)
     }
 
     suspend fun loginUser(userRequest: UserRequest) {

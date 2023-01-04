@@ -12,9 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.cheezycode.notesample.R
 import com.cheezycode.notesample.databinding.FragmentRegisterBinding
-import com.cheezycode.notesample.models.User
-import com.cheezycode.notesample.models.UserRequest
-import com.cheezycode.notesample.models.UserResponse
+import com.cheezycode.notesample.models.UserCreate
 import com.cheezycode.notesample.utils.Helper.Companion.hideKeyboard
 import com.cheezycode.notesample.utils.NetworkResult
 import com.cheezycode.notesample.utils.TokenManager
@@ -55,8 +53,8 @@ class RegisterFragment : Fragment() {
             hideKeyboard(it)
             val validationResult = validateUserInput()
             if (validationResult.first) {
-                val userRequest = getUserRequest()
-                authViewModel.registerUser(userRequest)
+                val userCreate = getUserRequest()
+                authViewModel.registerUser(userCreate)
             } else {
                 showValidationErrors(validationResult.second)
             }
@@ -76,11 +74,12 @@ class RegisterFragment : Fragment() {
     }
 
 
-    private fun getUserRequest(): UserRequest {
+    private fun getUserRequest(): UserCreate {
         return binding.run {
-            UserRequest(
+            UserCreate(
                 txtPassword.text.toString(),
-                txtUsername.text.toString()
+                txtUsername.text.toString(),
+                txtEmail.text.toString()
             )
         }
     }

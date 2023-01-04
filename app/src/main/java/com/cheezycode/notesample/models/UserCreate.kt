@@ -1,6 +1,7 @@
 package com.cheezycode.notesample.models
 
-data class UserRequest(
+data class UserCreate(
     val password: String,
     val username: String,
+    val email:String
 )
