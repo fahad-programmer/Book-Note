@@ -36,6 +36,19 @@ class NoteRepository @Inject constructor(private val noteAPI: NoteAPI) {
         }
     }
 
+    suspend fun searchNotes(term: String) {
+        _notesLiveData.postValue(NetworkResult.Loading())
+        val response = noteAPI.searchNotes(term)
+        if (response.isSuccessful && response.body() != null) {
+            _notesLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            _notesLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            _notesLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     suspend fun updateNote(id: String, noteRequest: NoteRequest) {
         _statusLiveData.postValue(NetworkResult.Loading())
         val response = noteAPI.updateNote(id, noteRequest)

@@ -2,12 +2,12 @@ package com.cheezycode.notesample.ui.note
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.cheezycode.notesample.R
 import com.cheezycode.notesample.databinding.FragmentMainBinding
 import com.cheezycode.notesample.models.NoteResponse
-import com.cheezycode.notesample.utils.Constants.TAG
 import com.cheezycode.notesample.utils.NetworkResult
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -107,6 +107,7 @@ class MainFragment : Fragment() {
         binding.addNote.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_noteFragment)
         }
+        bindHandlers()
         bindObservers()
     }
 
@@ -137,6 +138,23 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun bindHandlers() {
+        val searchBox: SearchView = binding.searchView
+        searchBox.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    noteViewModel.searchNote(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
     }
 
 }

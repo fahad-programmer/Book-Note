@@ -40,6 +40,12 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
         }
     }
 
+    fun searchNote(term: String) {
+        viewModelScope.launch {
+            noteRepository.searchNotes(term)
+        }
+    }
+
 
 
 
