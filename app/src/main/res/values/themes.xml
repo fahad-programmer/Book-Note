@@ -7,8 +7,10 @@
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#64B5F6</item>
+
         <item name="colorSecondaryVariant">#2196F3</item>
         <item name="colorOnSecondary">#FFFFFF</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

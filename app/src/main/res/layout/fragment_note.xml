@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <TextView
@@ -44,6 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/add_edit_text">
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -93,7 +95,7 @@
             android:lines="10"
             android:scrollHorizontally="false"
             android:scrollbars="vertical"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textColorHint="@color/light_gray"
             android:textSize="16sp" />
 
@@ -113,7 +115,7 @@
             android:fontFamily="@font/sf_pro_display_bold"
             android:text="@string/txt_submit"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="#fff"
             android:textSize="16sp" />
 
         <com.google.android.gms.ads.AdView

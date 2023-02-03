@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@drawable/note_background"
+    android:background="@drawable/search_view_bg"
     android:orientation="vertical"
     android:padding="16dp">
 

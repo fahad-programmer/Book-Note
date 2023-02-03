@@ -6,7 +6,7 @@
 
 
 
-    <application
+    <application android:hardwareAccelerated="true"
         android:name=".NoteApplication"
         android:allowBackup="true"
         android:icon="@drawable/playstore"
@@ -18,7 +18,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/app_ads_id"/>
-        <activity
+        <activity android:hardwareAccelerated="true"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
