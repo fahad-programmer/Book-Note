@@ -1,6 +1,9 @@
 package com.cheezycode.notesample.ui.note
 
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -121,21 +124,45 @@ class NoteFragment : Fragment() {
         })
     }
 
+    private fun isInternetAvailable(): Boolean {
+        val connectivityManager = activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        return activeNetwork?.isConnected == true
+    }
+
     private fun bindHandlers() {
         binding.btnDelete.setOnClickListener {
-            note?.let { noteViewModel.deleteNote(it.id) }
-            showIntersialAds()
+            if (isInternetAvailable()) {
+                note?.let { noteViewModel.deleteNote(it.id) }
+                showIntersialAds()
+            } else  {
+                val customDialog = CustomDialog(this.context!!)
+                customDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+                val window = customDialog.window
+                window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                customDialog.show()
+            }
+
         }
         binding.apply {
             btnSubmit.setOnClickListener {
-                val title = txtTitle.text.toString()
-                val body = txtDescription.text.toString()
-                val noteRequest = NoteRequest(title, body)
-                if (note == null) {
-                    noteViewModel.createNote(noteRequest)
+                if (isInternetAvailable()) {
+                    val title = txtTitle.text.toString()
+                    val body = txtDescription.text.toString()
+                    val noteRequest = NoteRequest(title, body)
+                    if (note == null) {
+                        noteViewModel.createNote(noteRequest)
+                    } else {
+                        noteViewModel.updateNote(note!!.id, noteRequest)
+                    }
                 } else {
-                    noteViewModel.updateNote(note!!.id, noteRequest)
+                    val customDialog = CustomDialog(context!!)
+                    customDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+                    val window = customDialog.window
+                    window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    customDialog.show()
                 }
+
             }
         }
     }

@@ -11,9 +11,9 @@ android {
     defaultConfig {
         applicationId "com.cheezycode.notesample"
         minSdk 21
-        targetSdk 32
-        versionCode 7
-        versionName "7.1"
+        targetSdk 33
+        versionCode 11
+        versionName "11"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,5 +76,6 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.github.florent37:expansionpanel:1.2.4'
 
 }

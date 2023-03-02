@@ -6,4 +6,10 @@
     <color name="highlight_text_color">#2196F3</color>
     <color name="colorEditTextBgColor">#f2f5f8</color>
     <color name="colorEditTextBorderColor">#E9EBEF</color>
+
+    <color name="primary_color">#8297FF</color>
+    <!--App Main Colors-->
+    <color name="colorDarkGray">#1c1c1c</color>
+    <color name="colorLightGray">#434645</color>
+    <color name="colorPrimaryLightest">#D3FFD4</color>
 </resources>

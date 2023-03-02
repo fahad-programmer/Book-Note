@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+        android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home"
+
+
+        />
+
+        <item
+
+            android:id="@+id/manage_accounts"
+            android:icon="@drawable/ic_baseline_manage_accounts_24"
+            android:title="Manage Account"
+
+
+            />
+
+        <item
+
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Settings"
+
+
+            />
+
+        <item
+
+            android:id="@+id/share"
+            android:icon="@drawable/ic_baseline_share_24"
+            android:title="Share"
+
+
+            />
+
+        <item
+
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_baseline_logout_24"
+            android:title="Logout"
+
+
+            />
+
+        <item
+
+            android:id="@+id/close_sidebar"
+            android:icon="@drawable/ic_baseline_close_24"
+            android:title="Close SideBar"
+
+
+            />
+
+    </group>
+
+
+
+</menu>

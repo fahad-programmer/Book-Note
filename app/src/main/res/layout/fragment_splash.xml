@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/sf_pro_display_medium"
+        android:fontFamily="@font/lato_black_italic"
         android:text="Book Note"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
 
@@ -52,7 +52,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro_display_medium"
+        android:fontFamily="@font/lato_black_italic"
         android:text="When Your Heart Speaks, Take A Note"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,10 +67,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:textSize="12sp"
+        android:fontFamily="@font/robotoblack"
         android:text="© 2023 - All Rights Reserved By Wembra LLC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
 

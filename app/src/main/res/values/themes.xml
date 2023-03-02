@@ -1,20 +1,55 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NoteSample" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#64B5F6</item>
-        <item name="colorPrimaryVariant">#2196F3</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">#64B5F6</item>
-
-        <item name="colorSecondaryVariant">#2196F3</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-
+    <style name="Theme.NoteSample" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#8297FF</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <!--Light Mode-->
+    <!--Screen background if light is on-->
+    <style name="SCREEN">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!--Light Mode-->
+    <!--Screen background if light is on-->
+    <style name="SettingsSCREEN">
+        <item name="android:background">@color/primary_color</item>
+    </style>
+
+    <style name="SettingsSCREENBtn">
+        <item name="android:background">@drawable/button_round_back</item>
+    </style>
+
+    <!--SearchView Style-->
+    <style name="SearchView">
+        <item name="android:background">@drawable/search_view_bg</item>
+    </style>
+
+    <style name="NotesBox">
+        <item name="android:background">@drawable/search_view_bg</item>
+    </style>
+
+    <!--Screen background if light is on-->
+    <style name="TEXT">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--Screen background if light is on-->
+    <style name="BUTTON">
+        <item name="android:background">@color/black</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!--Image background if light is on-->
+    <style name="Image">
+        <item name="tint">@color/black</item>
+    </style>
+
+    
+
+
 
     <style name="NoActionBar" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
@@ -22,4 +57,14 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+    
+    <style name="nightModeSwitch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorControlActivated">@color/black</item>
+        <item name="colorSwitchThumbNormal">#fff</item>
+        <item name="android:colorForeground">#99ffffff</item>
+    </style>
+
+
+
+    
 </resources>

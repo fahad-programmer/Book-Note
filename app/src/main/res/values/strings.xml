@@ -25,4 +25,43 @@
     <string name="add_note">Add Note</string>
     <string name="app_ads_id">ca-app-pub-9139048484944052~9184180321</string>
     <string name="ad_attribution">Ad</string>
+    <string name="open_nav">Open Nav</string>
+    <string name="close_nav">Close Nav</string>
+    <string name="no_internet_connection_please_check_the_internet_connection_and_then_try_again">No Internet Connection Please Check The Internet Connection And Then Try Again</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="johndavid_gmail_com">johndavid@gmail.com</string>
+    <string name="john_david">John David</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="notification">Notification</string>
+    <string name="notifications">Notifications</string>
+    <string name="private_account">Private Account</string>
+    <string name="about_us">About Us</string>
+    <string name="background_information">The app is a product of Wembra Corporation, a leading technology company that specializes in developing innovative software solutions. The team behind the app is made up of experienced developers, designers, and project managers who are passionate about creating high-quality mobile applications. Wembra Corporation has a proven track record of delivering successful products to satisfied clients, and the app is no exception.</string>
+    <string name="vision_mission">Our simple notes app is designed to make taking and organizing notes a breeze. Whether you need to jot down a quick reminder, make a to-do list, or keep track of important information, our app has you covered. With a clean and intuitive interface, you can quickly create, edit, and categorize your notes to keep everything in one place. Our app is perfect for students, professionals, and anyone who needs a reliable tool to manage their notes on the go. Try our app today and see how easy it is to stay organized and productive!</string>
+
+    //Faq questions
+    <string-array name="faq_questions">
+        <item>What is the purpose of this note-taking application?</item>
+        <item>Can I access my notes from multiple devices?</item>
+        <item>Is my data safe on this note-taking application?</item>
+        <item>How much does this note-taking application cost?</item>
+        <item>Can I share my notes with others?</item>
+        <item>Can I organize my notes in this application?</item>
+        <item>Is there a limit to how many notes I can create?</item>
+        <item>Can I customize the interface of this application?</item>
+    </string-array>
+    <string name="content_text">Content</string>
+
+    <string-array name="faq_answers">
+        <item>The purpose of this application is to provide users with a simple and easy-to-use platform for taking notes and accessing them from anywhere in the world.</item>
+        <item>Yes, you can access your notes from any device with an internet connection. All your notes are stored on the cloud, so you can access them from your computer, tablet, or smartphone.</item>
+        <item>Yes, we take data security very seriously. We use encryption to protect your data, and our servers are hosted in secure data centers. Additionally, we don\'t share your data with anyone, unless required by law.</item>
+        <item>The basic version of the application is free. However, we also offer a premium version with additional features, which costs a small monthly fee But that is not available right now.</item>
+        <item>The basic version of the application is free. However, we also offer a premium version with additional features, which costs a small monthly fee.</item>
+        <item>The basic version of the application is free. However, we also offer a premium version with additional features, which costs a small monthly fee.</item>
+        <item>No, there is no limit to the number of notes you can create in this application.</item>
+        <item>No, there is no limit to the number of notes you can create in this application.</item>
+    </string-array>
+
+
 </resources>
