@@ -9,6 +9,7 @@ import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 
+
 class NoteRepository @Inject constructor(private val noteAPI: NoteAPI) {
 
     private val _notesLiveData = MutableLiveData<NetworkResult<List<NoteResponse>>>()
@@ -26,6 +27,19 @@ class NoteRepository @Inject constructor(private val noteAPI: NoteAPI) {
     suspend fun getNotes() {
         _notesLiveData.postValue(NetworkResult.Loading())
         val response = noteAPI.getNotes()
+        if (response.isSuccessful && response.body() != null) {
+            _notesLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            _notesLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            _notesLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    suspend fun getTrash() {
+        _notesLiveData.postValue(NetworkResult.Loading())
+        val response = noteAPI.trashView()
         if (response.isSuccessful && response.body() != null) {
             _notesLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -58,7 +72,7 @@ class NoteRepository @Inject constructor(private val noteAPI: NoteAPI) {
     suspend fun deleteNote(noteId: String) {
         _statusLiveData.postValue(NetworkResult.Loading())
         val response = noteAPI.deleteNote(noteId)
-        handleResponse(response, "Note Deleted")
+        handleResponse2(response)
     }
 
     private fun handleResponse(response: Response<NoteResponse>, message: String) {
@@ -68,4 +82,14 @@ class NoteRepository @Inject constructor(private val noteAPI: NoteAPI) {
             _statusLiveData.postValue(NetworkResult.Success(Pair(false, "Something went wrong")))
         }
     }
+
+    private fun handleResponse2(response: Response<Void>) {
+        if (response.isSuccessful && response.code() == 200) {
+            _statusLiveData.postValue(NetworkResult.Success(Pair(true, "All Done")))
+        } else {
+            _statusLiveData.postValue(NetworkResult.Success(Pair(false, "Something went wrong")))
+        }
+    }
+
+
 }

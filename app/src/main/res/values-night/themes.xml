@@ -6,11 +6,28 @@
 
     <!--Light Mode-->
     <!--Screen background if light is on-->
+
+    <style name="BUTTON">
+        <item name="android:backgroundTint">@color/primary_color</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="SCREEN">
         <item name="android:background">@color/black</item>
     </style>
 
+    <!--settings page boxes-->
+    <style name="settingsBox">
+        <item name="android:background">@drawable/options_background_settings_dark</item>
+    </style>
+
+    <!--Image background if light is on-->
+    <style name="restoreImage">
+        <item name="tint">@color/primary_color</item>
+    </style>
+
     <style name="SearchView">
+        <item name="android:backgroundTint">@color/white</item>
         <item name="android:background">@drawable/search_view_bg_dark</item>
     </style>
 
@@ -22,6 +39,14 @@
         <item name="android:background">@drawable/button_round_back_night</item>
     </style>
 
+    <!--Faq Box-->
+    <style name="faqBox">
+        <item name="android:background">@drawable/search_view_bg_dark</item>
+        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
     <style name="SettingsSCREEN">
         <item name="android:background">@color/black</item>
     </style>
@@ -31,11 +56,6 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <!--Screen background if light is on-->
-    <style name="BUTTON">
-        <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
 
     <!--Image background if light is on-->
     <style name="Image">

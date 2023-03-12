@@ -16,7 +16,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/primary_color"
+            android:background="@color/white"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
@@ -32,7 +32,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_toStartOf="@+id/headerIndicator"
                 android:layout_toLeftOf="@+id/headerIndicator"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_color"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 

@@ -16,9 +16,11 @@ interface NoteAPI {
     @GET("api/search/{term}")
     suspend fun searchNotes(@Path("term") term:String): Response<List<NoteResponse>>
 
+    @POST("api/notes/{id}/trash/")
+    suspend fun deleteNote(@Path("id") id: String): Response<Void>
 
-    @DELETE("api/notes/{id}/")
-    suspend fun deleteNote(@Path("id") id: String) : Response<NoteResponse>
+    @GET("api/trash")
+    suspend fun trashView(): Response<List<NoteResponse>>
 
     @PUT("api/notes/{id}/")
     suspend fun updateNote(

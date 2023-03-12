@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/add_edit_text"
-        style="@style/TEXT"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -60,7 +60,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/ptsansbold"
             android:text="@string/note_title"
-            style="@style/TEXT"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <EditText
@@ -68,12 +68,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
+            android:textColor="@color/white"
             android:background="@android:color/transparent"
-            android:fontFamily="@font/ptsansbold"
+            android:fontFamily="@font/ptsans_regular"
             android:hint="@string/txt_title_hint"
             android:minHeight="48dp"
-            style="@style/TEXT"
-            android:textColorHint="@color/light_gray"
+            android:textColorHint="@color/white"
             android:textSize="16sp" />
 
         <View
@@ -83,7 +83,7 @@
             android:background="@color/light_gray" />
 
         <TextView
-            style="@style/TEXT"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -104,8 +104,8 @@
             android:lines="10"
             android:scrollHorizontally="false"
             android:scrollbars="vertical"
-            style="@style/TEXT"
-            android:textColorHint="@color/light_gray"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="16sp" />
 
         <View
@@ -119,11 +119,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/primary_color"
+            android:backgroundTint="@color/white"
             android:fontFamily="@font/robotoregular"
             android:text="@string/txt_submit"
             android:textAllCaps="true"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:textSize="16sp" />
 
         <com.google.android.gms.ads.AdView

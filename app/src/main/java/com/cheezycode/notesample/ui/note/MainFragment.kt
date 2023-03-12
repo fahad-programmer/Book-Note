@@ -1,10 +1,13 @@
 package com.cheezycode.notesample.ui.note
 
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -20,14 +23,15 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.cheezycode.notesample.MainActivity
 import com.cheezycode.notesample.R
 import com.cheezycode.notesample.databinding.FragmentMainBinding
 import com.cheezycode.notesample.models.NoteResponse
 import com.cheezycode.notesample.utils.NetworkResult
+import com.cheezycode.notesample.utils.TokenManager
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -35,10 +39,14 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var appBar: MaterialToolbar
@@ -61,6 +69,10 @@ class MainFragment : Fragment() {
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         adapter = NoteAdapter(::onNoteClicked)
+
+        // Inflate the layout for this fragment
+        // access token
+        tokenManager = TokenManager(requireContext())
 
         setHasOptionsMenu(true) // enable fragment to receive onCreateOptionsMenu callback
         //Checking the internet connection before the creation of the main screen
@@ -106,7 +118,7 @@ class MainFragment : Fragment() {
     private fun setUpDrawerLayout() {
         appBar = binding.appBar
         (activity as AppCompatActivity).setSupportActionBar(appBar)
-        (activity as AppCompatActivity).supportActionBar?.title = "";
+        (activity as AppCompatActivity).supportActionBar?.title = ""
         actionBarDrawerToggle = ActionBarDrawerToggle(activity, binding.drawerLayout, R.string.open_nav, R.string.close_nav)
         actionBarDrawerToggle.syncState()
 
@@ -123,9 +135,17 @@ class MainFragment : Fragment() {
                 }
                 R.id.manage_accounts -> {
                     // Handle manage account button click
-                    Toast.makeText(context, "Manage Accounts", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_mainFragment_to_manageAccount)
                 }
                 R.id.share -> {
+                    // Highlight the selected item
+                    val shareIntent = Intent(Intent.ACTION_SEND)
+                    shareIntent.type = "text/plain"
+                    shareIntent.putExtra(
+                        Intent.EXTRA_TEXT,
+                        "Wanted To Write Down Some Notes Download Book Note " + "https://play.google.com/store/apps/details?id=com.cheezycode.notesample&hl=en&gl=US"
+                    )
+                    startActivity(Intent.createChooser(shareIntent, "Share via"))
                     // Handle settings button click
                     Toast.makeText(context, "share", Toast.LENGTH_SHORT).show()
                 }
@@ -133,6 +153,37 @@ class MainFragment : Fragment() {
                     // Handle profile button click
                     findNavController().navigate(R.id.action_mainFragment_to_user_settings2)
                 }
+                R.id.logout -> {
+                    //handling the logout function
+                    tokenManager.deleteToken()
+
+                    // replace the current fragment with the LoginFragment
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    context!!.startActivity(intent)
+                }
+                R.id.trash -> {
+                    findNavController().navigate(R.id.action_mainFragment_to_trash2)
+                }
+                R.id.rateUs -> {
+                    // Handle rateUs button click
+                    try {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=" + "com.cheezycode.notesample")
+                            )
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps/details?id=com.cheezycode.notesample")
+                            )
+                        )
+                    }
+                }
+
             }
 
 
@@ -198,21 +249,47 @@ class MainFragment : Fragment() {
                 mInterstitialAd = null
             }
         }
+// Show an interstitial ad after a delay of 5 seconds
         try {
             val handler = Handler()
             val runnable = Runnable {
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(getActivity()!!)
-                } else {
-                    println("The interstitial ad wasn't ready yet.")
+                mInterstitialAd?.let {
+                    activity?.let {
+                        if (it.isFinishing) {
+                            return@let
+                        }
+                        if (it.isDestroyed) {
+                            return@let
+                        }
+                        if (it.isChangingConfigurations) {
+                            return@let
+                        }
+                        if (it.window == null) {
+                            return@let
+                        }
+                        if (it.window!!.isFloating()) {
+                            return@let
+                        }
+                        it.runOnUiThread {
+                            if (it.isDestroyed || it.isFinishing) {
+                                return@runOnUiThread
+                            }
+                            if (mInterstitialAd !== null) {
+                                mInterstitialAd?.show(activity!!)
+                            } else {
+                                println("The interstitial ad wasn't ready yet.")
+                            }
+                        }
+                    }
                 }
             }
-            handler.postDelayed(runnable, 3000) // 3000 milliseconds = 3 seconds
+            handler.postDelayed(runnable, 5000) // 5000 milliseconds = 5 seconds
         } catch (e: Exception) {
             mInterstitialAd = null
             e.printStackTrace() // print the exception stack trace for debugging purposes
-        }}
+        }
 
+    }
 
 
 
@@ -248,7 +325,7 @@ class MainFragment : Fragment() {
 
 
         private fun bindObservers() {
-            noteViewModel.notesLiveData.observe(viewLifecycleOwner, Observer {
+            noteViewModel.notesLiveData.observe(viewLifecycleOwner) {
                 binding.progressBar.isVisible = false
                 when (it) {
                     is NetworkResult.Success -> {
@@ -262,7 +339,7 @@ class MainFragment : Fragment() {
                         binding.progressBar.isVisible = true
                     }
                 }
-            })
+            }
         }
 
         private fun onNoteClicked(noteResponse: NoteResponse) {
@@ -305,6 +382,7 @@ class MainFragment : Fragment() {
 
             })
         }
+
 
     override fun onDestroy() {
         super.onDestroy()

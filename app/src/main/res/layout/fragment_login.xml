@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_container"
+    android:layout_width="match_parent"
+    android:background="@color/primary_color"
+    android:layout_height="match_parent">
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,34 +19,40 @@
         android:orientation="vertical"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:paddingTop="32dp"
         android:paddingBottom="60dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@drawable/loginvector"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/sf_pro_display_bold"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ptsansbold"
             android:text="@string/txt_login_header"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="30sp" />
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:fontFamily="@font/sf_pro_display_regular"
+            android:fontFamily="@font/ptsans_regular"
             android:text="@string/txt_login_subheader"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            android:fontFamily="@font/sf_pro_display_regular"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/ptsansbold"
             android:text="Email Or Username"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <EditText
@@ -46,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:background="@drawable/edit_text_background"
-            android:fontFamily="@font/sf_pro_display_semibold"
+            android:fontFamily="@font/ptsans_regular"
             android:hint="@string/txt_email_hint"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
@@ -60,9 +75,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/sf_pro_display_regular"
+            android:fontFamily="@font/ptsansbold"
             android:text="@string/txt_password"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <EditText
@@ -71,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:background="@drawable/edit_text_background"
-            android:fontFamily="@font/sf_pro_display_semibold"
+            android:fontFamily="@font/ptsans_regular"
             android:hint="@string/txt_password_hint"
             android:inputType="textPassword"
             android:minHeight="48dp"
@@ -95,12 +110,11 @@
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/black"
-            android:fontFamily="@font/sf_pro_display_bold"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/ptsansbold"
             android:text="@string/txt_login"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -109,7 +123,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/sf_pro_display_semibold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/ptsansbold"
             android:text="@string/txt_no_account_signup"
             android:textSize="14sp" />
 
@@ -128,3 +143,5 @@
 
 
 </ScrollView>
+
+</FrameLayout>

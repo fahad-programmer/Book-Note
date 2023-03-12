@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun bindObservers() {
-        authViewModel.userResponseLiveData.observe(viewLifecycleOwner, Observer {
+        authViewModel.userResponseLiveData.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = false
             when (it) {
                 is NetworkResult.Success -> {
@@ -87,11 +87,11 @@ class LoginFragment : Fragment() {
                 is NetworkResult.Error -> {
                     showValidationErrors(it.message.toString())
                 }
-                is NetworkResult.Loading ->{
+                is NetworkResult.Loading -> {
                     binding.progressBar.isVisible = true
                 }
             }
-        })
+        }
     }
 
     override fun onDestroyView() {

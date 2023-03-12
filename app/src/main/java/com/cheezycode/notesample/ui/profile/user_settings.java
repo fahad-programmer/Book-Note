@@ -4,9 +4,12 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,17 +28,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheezycode.notesample.MainActivity;
 import com.cheezycode.notesample.R;
+import com.cheezycode.notesample.models.NoteResponse;
+import com.cheezycode.notesample.models.UserProfile;
 import com.cheezycode.notesample.ui.note.MainFragment;
+import com.cheezycode.notesample.utils.TokenManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.Arrays;
 import java.util.Objects;
+
+import javax.inject.Inject;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class user_settings extends Fragment {
+
+    @Inject
+    TokenManager tokenManager;
 
     SwitchCompat Dark_switch_button;
     SwitchCompat Notification_switch_button;
@@ -50,6 +74,9 @@ public class user_settings extends Fragment {
     MaterialToolbar app_bar;
     ImageView aboutPage;
     ImageView faqPage;
+    ImageView help_support;
+    TextView user_email;
+    TextView user_username;
 
 
     @Override
@@ -61,8 +88,8 @@ public class user_settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        tokenManager = new TokenManager(requireContext());
         return inflater.inflate(R.layout.fragment_user_settings, container, false);
-
     }
 
     //After the view is created
@@ -70,6 +97,9 @@ public class user_settings extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Call methods to set up the views and handle user settings
+        user_email = requireActivity().findViewById(R.id.user_name);
+        user_username = requireActivity().findViewById(R.id.user_email);
+        getUserProfile();
         linksSetUp();
         setUpViews();
         darkModeApplier();
@@ -84,6 +114,7 @@ public class user_settings extends Fragment {
     private void setUpDrawerLayout() {
         app_bar = requireView().findViewById(R.id.appBar);
         ((AppCompatActivity) requireActivity()).setSupportActionBar(app_bar);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("");
         DrawerLayout drawerLayout = requireView().findViewById(R.id.drawer_layout);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(requireActivity(), drawerLayout, app_bar, R.string.open_nav, R.string.close_nav){
@@ -112,6 +143,18 @@ public class user_settings extends Fragment {
                     item.setChecked(true);
                     break;
 
+                case R.id.logout:
+                    // Handling the logout function
+                    tokenManager.deleteToken();
+
+                   // Replace the current fragment with the LoginFragment
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (getContext() != null) {
+                        getContext().startActivity(intent);
+                    }
+                    break;
+
                 case R.id.share:
                     // Highlight the selected item
                     item.setChecked(true);
@@ -121,9 +164,18 @@ public class user_settings extends Fragment {
                     startActivity(Intent.createChooser(shareIntent, "Share via"));
                     break;
                 case R.id.manage_accounts:
+                    findNavController(this).navigate(R.id.action_user_settings_to_manageAccount);
                 case R.id.settings:
                     // Highlight the selected item
                     break;
+                case R.id.rateUs:
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "com.cheezycode.notesample")));
+                    } catch (ActivityNotFoundException e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.cheezycode.notesample")));
+                    }
+                case R.id.trash:
+                    findNavController(this).navigate(R.id.action_user_settings_to_trash2);
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
@@ -139,7 +191,49 @@ public class user_settings extends Fragment {
         faqPage.setOnClickListener(view -> {
             findNavController(this).navigate(R.id.action_user_settings_to_faq2);
         });
+        help_support = requireActivity().findViewById(R.id.help_support_btn);
+        help_support.setOnClickListener(view -> {
+            findNavController(this).navigate(R.id.action_user_settings_to_help_support2);
+        });
     }
+
+    public void getUserProfile() {
+        String url = "https://unexpectedprogrammer.pythonanywhere.com/api/user-profile";
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Token " + tokenManager.getToken())
+                .build();
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = Objects.requireNonNull(response.body()).string();
+                    Gson gson = new Gson();
+                    UserProfile userProfile = gson.fromJson(responseBody, UserProfile.class);
+
+                    // Update the user email view with the email returned from the API
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            user_email.setText(userProfile.getEmail());
+                            user_username.setText(userProfile.getUsername());
+                        }
+                    });
+                } else {
+                    // Handle error response
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                // Handle network error
+            }
+        });
+    }
+
 
 
 

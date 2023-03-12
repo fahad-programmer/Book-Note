@@ -28,11 +28,11 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/appBar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            style="@style/SCREEN"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#8297FF"
             app:title=""
+            app:navigationIconTint="@color/white"
             app:navigationIcon="@drawable/ic_baseline_menu_24">
 
             <TextView
@@ -49,7 +49,6 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
-        android:backgroundTint="@color/primary_color"
         style="@style/SearchView"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -86,7 +85,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/BUTTON"
         android:id="@+id/add_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

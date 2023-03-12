@@ -9,7 +9,7 @@
     <!--Light Mode-->
     <!--Screen background if light is on-->
     <style name="SCREEN">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/primary_color</item>
     </style>
 
     <!--Light Mode-->
@@ -24,10 +24,12 @@
 
     <!--SearchView Style-->
     <style name="SearchView">
+        <item name="android:backgroundTint">@color/white</item>
         <item name="android:background">@drawable/search_view_bg</item>
     </style>
 
     <style name="NotesBox">
+        <item name="android:backgroundTint">@color/white</item>
         <item name="android:background">@drawable/search_view_bg</item>
     </style>
 
@@ -36,19 +38,34 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <!--Faq Box-->
+    <style name="faqBox">
+        <item name="android:background">@drawable/search_view_bg</item>
+        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <!--Screen background if light is on-->
     <style name="BUTTON">
-        <item name="android:background">@color/black</item>
+        <item name="android:backgroundTint">@color/black</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <!--Image background if light is on-->
     <style name="Image">
-        <item name="tint">@color/black</item>
+        <item name="tint">@color/white</item>
     </style>
 
-    
+    <!--Image background if light is on-->
+    <style name="restoreImage">
+        <item name="tint">@color/primary_color</item>
+    </style>
 
+
+    <!--settings page boxes-->
+    <style name="settingsBox">
+        <item name="android:background">@drawable/options_background_settings</item>
+    </style>
 
 
     <style name="NoActionBar" parent="Theme.Material3.Light.NoActionBar">

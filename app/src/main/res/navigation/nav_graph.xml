@@ -15,6 +15,12 @@
         <action
             android:id="@+id/action_mainFragment_to_user_settings2"
             app:destination="@id/user_settings" />
+        <action
+            android:id="@+id/action_mainFragment_to_trash2"
+            app:destination="@id/trash2" />
+        <action
+            android:id="@+id/action_mainFragment_to_manageAccount"
+            app:destination="@id/manageAccount" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -67,6 +73,15 @@
         <action
             android:id="@+id/action_user_settings_to_faq2"
             app:destination="@id/faq2" />
+        <action
+            android:id="@+id/action_user_settings_to_help_support2"
+            app:destination="@id/help_support2" />
+        <action
+            android:id="@+id/action_user_settings_to_trash2"
+            app:destination="@id/trash2" />
+        <action
+            android:id="@+id/action_user_settings_to_manageAccount"
+            app:destination="@id/manageAccount" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -78,4 +93,29 @@
         android:name="com.cheezycode.notesample.ui.profile.faq"
         android:label="fragment_faq"
         tools:layout="@layout/fragment_faq" />
+    <fragment
+        android:id="@+id/help_support2"
+        android:name="com.cheezycode.notesample.ui.profile.help_support"
+        android:label="fragment_help_support"
+        tools:layout="@layout/fragment_help_support" />
+    <fragment
+        android:id="@+id/trash2"
+        android:name="com.cheezycode.notesample.ui.profile.trash"
+        android:label="fragment_trash"
+        tools:layout="@layout/fragment_trash" >
+        <action
+            android:id="@+id/action_trash2_to_user_settings"
+            app:destination="@id/user_settings" />
+        <action
+            android:id="@+id/action_trash2_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_trash2_to_manageAccount"
+            app:destination="@id/manageAccount" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageAccount"
+        android:name="com.cheezycode.notesample.ui.profile.ManageAccount"
+        android:label="fragment_manage_account"
+        tools:layout="@layout/fragment_manage_account" />
 </navigation>

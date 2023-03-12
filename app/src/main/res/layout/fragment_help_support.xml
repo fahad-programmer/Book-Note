@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/SCREEN"
+    tools:context=".ui.profile.help_support">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="12dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/help_support"
+            android:src="@drawable/help_support"
+            android:contentDescription="help_support" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/help_support"
+            android:textSize="22sp"
+            style="@style/TEXT"
+            android:id="@+id/help_support_1"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/ptsansbold"
+            android:layout_centerHorizontal="true"
+            android:text="Help &amp; Support"/>
+
+
+        <EditText
+            android:id="@+id/help_support_box"
+            android:layout_width="match_parent"
+            android:padding="12dp"
+            android:layout_height="200dp"
+            android:textColorHint="@color/white"
+            android:layout_below="@+id/help_support_1"
+            android:layout_marginTop="24dp"
+            android:gravity="top|start"
+            style="@style/faqBox"
+            android:inputType="textMultiLine"
+            android:scrollHorizontally="false"
+            android:lines="10"
+            android:scrollbars="vertical"
+            android:textSize="16sp"
+            android:hint="How We May Help You ?"
+            android:fontFamily="@font/ptsans_regular" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            style="@style/BUTTON"
+            android:layout_below="@+id/help_support_box"
+            android:fontFamily="@font/robotoregular"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:id="@+id/faqMainBoxBtn"
+            />
+
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

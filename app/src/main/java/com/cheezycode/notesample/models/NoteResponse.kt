@@ -6,4 +6,5 @@ data class NoteResponse(
     val body: String,
     val title: String,
     val updated_at: String,
+    val deleted_at:String
 )

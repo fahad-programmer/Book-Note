@@ -5,26 +5,25 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     style="@style/NotesBox"
-    android:backgroundTint="@color/primary_color"
     android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
+        style="@style/TEXT"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TEXT"
         android:textStyle="bold"
         android:fontFamily="@font/ptsansbold"
         android:text="How to draw a professional wireframe?"
         android:textSize="18sp" />
 
     <TextView
+        style="@style/TEXT"
         android:id="@+id/desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        style="@style/TEXT"
         android:fontFamily="@font/ptsans_regular"
         android:text="For wireframe, you need to have access to the tools required. You need to check the description of the tool to understand the underpinnings of the tool."
         android:textSize="13sp" />
