@@ -28,12 +28,6 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
         }
     }
 
-    fun getAllTrashNotes() {
-        viewModelScope.launch {
-            noteRepository.getTrash()
-        }
-    }
-
     fun updateNote(id: String, noteRequest: NoteRequest){
         viewModelScope.launch {
             noteRepository.updateNote(id, noteRequest)

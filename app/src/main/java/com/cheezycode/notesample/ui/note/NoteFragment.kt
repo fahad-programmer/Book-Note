@@ -1,28 +1,36 @@
 package com.cheezycode.notesample.ui.note
 
 
+
 import android.content.Context
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.Html
+import android.text.Spannable
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.ImageView
+import androidx.core.text.toHtml
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.cheezycode.notesample.R
 import com.cheezycode.notesample.databinding.FragmentNoteBinding
 import com.cheezycode.notesample.models.NoteRequest
 import com.cheezycode.notesample.models.NoteResponse
+import com.cheezycode.notesample.utils.Helper.Companion.hideKeyboard
 import com.cheezycode.notesample.utils.NetworkResult
-import com.google.android.gms.ads.*
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+
 
 @AndroidEntryPoint
 class NoteFragment : Fragment() {
@@ -31,6 +39,11 @@ class NoteFragment : Fragment() {
     private val binding get() = _binding!!
     private val noteViewModel by viewModels<NoteViewModel>()
     private var note: NoteResponse? = null
+    private lateinit var secondLayout: View
+    private lateinit var placeholderView: FrameLayout
+    private lateinit var boldButton: ImageView
+    private lateinit var italicButton: ImageView
+    private lateinit var underlineButton: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,74 +55,69 @@ class NoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showBannerAds()
+
         setInitialData()
         bindHandlers()
         bindObservers()
-    }
 
-     private fun showIntersialAds() {
-        MobileAds.initialize(view!!.context) {}
-        var mInterstitialAd: InterstitialAd? = null
-        val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(view!!.context,"ca-app-pub-9139048484944052/1936562926", adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                mInterstitialAd = null
-            }
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                if (!activity?.isFinishing!!) {
-                    interstitialAd.show(activity!!)
-                }
-            }
-        })
+        val inflater = LayoutInflater.from(this.context)
+        secondLayout =
+            inflater.inflate(R.layout.fragment_notes_bottom_sheet, null)
 
-        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-            override fun onAdClicked() {
-                // Called when a click is recorded for an ad.
-            }
+        boldButton = secondLayout.findViewById(R.id.bold)
+        underlineButton = secondLayout.findViewById(R.id.underline)
+        italicButton = secondLayout.findViewById(R.id.italic)
 
-            override fun onAdDismissedFullScreenContent() {
-                // Called when ad is dismissed.
-                mInterstitialAd = null
-            }
+        // Add click listeners to the views
 
-            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                // Called when ad fails to show.
-                mInterstitialAd = null
-            }
-
-            override fun onAdImpression() {
-                // Called when an impression is recorded for an ad.
-            }
-
-            override fun onAdShowedFullScreenContent() {
-                // Called when ad is shown.
-                mInterstitialAd = null
-            }
+        // Add click listeners to the views
+        boldButton.setOnClickListener {
+            print("good")
+            // Do something when the bold button is clicked
+            val editText: EditText = binding.txtDescription
+            val editable: Editable = editText.text
+            val boldSpan = StyleSpan(Typeface.BOLD)
+            editable.setSpan(
+                boldSpan,
+                editText.selectionStart,
+                editText.selectionEnd,
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE
+            )
+        }
+        underlineButton.setOnClickListener {
+            // Do something when the underline button is clicked
+        }
+        italicButton.setOnClickListener {
+            // Do something when the italic button is clicked
         }
 
-        val handler = Handler()
-        val runnable = Runnable {
 
-            if (mInterstitialAd != null) {
-                mInterstitialAd?.show(activity!!)
+
+        // Step 4: Initially set the visibility of the second layout to GONE
+        secondLayout.visibility = View.GONE
+
+        binding.optionLayout.setOnClickListener {
+            // Step 6: Toggle the visibility of the second layout
+            if (secondLayout.visibility == View.VISIBLE) {
+                secondLayout.visibility = View.GONE
             } else {
-                println("The interstitial ad wasn't ready yet.")
+                secondLayout.visibility = View.VISIBLE
+                this.view?.let { it1 -> hideKeyboard(it1) }
             }
         }
-        handler.postDelayed(runnable, 5000) // 5000 milliseconds = 5 seconds
 
+        // Add the secondLayout to the placeholder view
+        // Add the secondLayout to the placeholder view
+        placeholderView = binding.placeholderView
+        placeholderView.addView(secondLayout)
     }
 
-    private fun showBannerAds() {
-        MobileAds.initialize(view!!.context) {}
-        val adView = view!!.findViewById(R.id.bannerAd) as AdView
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
-    }
+
+
+
 
     private fun bindObservers() {
-        noteViewModel.statusLiveData.observe(viewLifecycleOwner, Observer {
+        noteViewModel.statusLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     findNavController().popBackStack()
@@ -121,34 +129,42 @@ class NoteFragment : Fragment() {
 
                 }
             }
-        })
+        }
     }
 
     private fun isInternetAvailable(): Boolean {
-        val connectivityManager = activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
         return activeNetwork?.isConnected == true
     }
 
-    private fun bindHandlers() {
-        binding.btnDelete.setOnClickListener {
-            if (isInternetAvailable()) {
-                note?.let { noteViewModel.deleteNote(it.id) }
-                showIntersialAds()
-            } else  {
-                val customDialog = CustomDialog(this.context!!)
-                customDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-                val window = customDialog.window
-                window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                customDialog.show()
-            }
 
-        }
+    // create a method to open the image picker
+
+
+    private fun bindHandlers() {
+
+      //        binding.btnDelete.setOnClickListener {
+//            if (isInternetAvailable()) {
+//                note?.let { noteViewModel.deleteNote(it.id) }
+//                showIntersialAds()
+//            } else  {
+//                val customDialog = CustomDialog(this.context!!)
+//                customDialog.window?.attributes?.windowAnimations = com.cheezycode.notesample.R.style.DialogAnimation
+//                val window = customDialog.window
+//                window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//                customDialog.show()
+//            }
+//
+//        }
         binding.apply {
             btnSubmit.setOnClickListener {
                 if (isInternetAvailable()) {
                     val title = txtTitle.text.toString()
-                    val body = txtDescription.text.toString()
+                    val body = txtDescription.text.toHtml()
+
+
                     val noteRequest = NoteRequest(title, body)
                     if (note == null) {
                         noteViewModel.createNote(noteRequest)
@@ -157,7 +173,7 @@ class NoteFragment : Fragment() {
                     }
                 } else {
                     val customDialog = CustomDialog(context!!)
-                    customDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+                    customDialog.window?.attributes?.windowAnimations = com.cheezycode.notesample.R.style.DialogAnimation
                     val window = customDialog.window
                     window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     customDialog.show()
@@ -169,7 +185,6 @@ class NoteFragment : Fragment() {
 
     private fun setInitialData() {
         try {
-            showIntersialAds()
         } catch (e: java.lang.NullPointerException) {
             println("Some exception occurred $e")
         }
@@ -179,11 +194,12 @@ class NoteFragment : Fragment() {
             note = Gson().fromJson<NoteResponse>(jsonNote, NoteResponse::class.java)
             note?.let {
                 binding.txtTitle.setText(it.title)
-                binding.txtDescription.setText(it.body)
+                val body = Html.fromHtml(it.body)
+                binding.txtDescription.setText(body)
             }
         }
         else{
-            binding.addEditText.text = resources.getString(R.string.add_note)
+            binding.addEditText.text = resources.getString(com.cheezycode.notesample.R.string.add_note)
         }
     }
 

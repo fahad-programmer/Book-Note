@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
     <TextView
         style="@style/TEXT"
         android:id="@+id/title"

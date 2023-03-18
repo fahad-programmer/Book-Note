@@ -47,7 +47,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
             <TextView
-                style="@style/TEXT"
+                android:textColor="@color/white"
                 android:padding="12dp"
                 android:fontFamily="@font/ptsansbold"
                 android:id="@+id/note"
