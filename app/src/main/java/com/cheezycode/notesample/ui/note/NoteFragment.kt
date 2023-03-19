@@ -2,6 +2,7 @@ package com.cheezycode.notesample.ui.note
 
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.net.ConnectivityManager
@@ -11,10 +12,7 @@ import android.text.Editable
 import android.text.Html
 import android.text.Spannable
 import android.text.style.StyleSpan
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -26,6 +24,7 @@ import com.cheezycode.notesample.R
 import com.cheezycode.notesample.databinding.FragmentNoteBinding
 import com.cheezycode.notesample.models.NoteRequest
 import com.cheezycode.notesample.models.NoteResponse
+import com.cheezycode.notesample.ui.note.textApi.*
 import com.cheezycode.notesample.utils.Helper.Companion.hideKeyboard
 import com.cheezycode.notesample.utils.NetworkResult
 import com.google.gson.Gson
@@ -44,6 +43,7 @@ class NoteFragment : Fragment() {
     private lateinit var boldButton: ImageView
     private lateinit var italicButton: ImageView
     private lateinit var underlineButton: ImageView
+    private lateinit var strikeThroughBtn: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +53,8 @@ class NoteFragment : Fragment() {
         return binding.root
     }
 
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,37 +62,49 @@ class NoteFragment : Fragment() {
         bindHandlers()
         bindObservers()
 
+
         val inflater = LayoutInflater.from(this.context)
         secondLayout =
             inflater.inflate(R.layout.fragment_notes_bottom_sheet, null)
+        
 
         boldButton = secondLayout.findViewById(R.id.bold)
         underlineButton = secondLayout.findViewById(R.id.underline)
         italicButton = secondLayout.findViewById(R.id.italic)
+        strikeThroughBtn = secondLayout.findViewById(R.id.strikethrough)
 
         // Add click listeners to the views
+
 
         // Add click listeners to the views
         boldButton.setOnClickListener {
-            print("good")
             // Do something when the bold button is clicked
             val editText: EditText = binding.txtDescription
             val editable: Editable = editText.text
-            val boldSpan = StyleSpan(Typeface.BOLD)
-            editable.setSpan(
-                boldSpan,
-                editText.selectionStart,
-                editText.selectionEnd,
-                Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-        }
-        underlineButton.setOnClickListener {
-            // Do something when the underline button is clicked
-        }
-        italicButton.setOnClickListener {
-            // Do something when the italic button is clicked
+            applyBoldSpan(editable)
         }
 
+        underlineButton.setOnClickListener {
+            // Do something when the underline button is clicked
+            val editText: EditText = binding.txtDescription
+            val editable: Editable = editText.text
+            applyUnderlineSpan(editable)
+
+        }
+
+        italicButton.setOnClickListener {
+            // Do something when the italic button is clicked
+            val editText: EditText = binding.txtDescription
+            val editable: Editable = editText.text
+            applyItalicSpan(editable)
+        }
+
+        strikeThroughBtn.setOnClickListener {
+            // Do something when the strikeThrough button is clicked
+            val editText: EditText = binding.txtDescription
+            val editable: Editable = editText.text
+            applyStrikethroughSpan(editable)
+        }
 
 
         // Step 4: Initially set the visibility of the second layout to GONE

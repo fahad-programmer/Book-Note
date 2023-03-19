@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 
@@ -66,6 +67,24 @@ public class textApi {
         }
     }
 
+    // Apply Strikethrough Span
+    public static void applyStrikethroughSpan(Editable editable) {
+        StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
+        int start = editable.getSpanStart(strikethroughSpan);
+        int end = editable.getSpanEnd(strikethroughSpan);
+        if (start >= 0 && end >= 0) {
+            editable.removeSpan(strikethroughSpan);
+            if (start != end) {
+                editable.setSpan(strikethroughSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        } else {
+            int selectionStart = Selection.getSelectionStart(editable);
+            int selectionEnd = Selection.getSelectionEnd(editable);
+            if (selectionStart != selectionEnd) {
+                editable.setSpan(strikethroughSpan, selectionStart, selectionEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+    }
 
 
 
